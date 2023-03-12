@@ -7,7 +7,7 @@
 n = int(input("Введите количество долек n: "))
 m = int(input("Введите количество долек m: "))
 k = int(input("Введите количество долек, которые хотите отломить k: "))
-if k < n * m and ((k % n == 0) or k < n * m and (k % m == 0)):
+if k < n * m and (k % n == 0 or k % m == 0):
     print('yes')
 else:
     print('no')
