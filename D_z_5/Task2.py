@@ -3,6 +3,7 @@
 # *Пример:*
 # 2 2
 #     4
+
 def summ(a, b):
     if (b == 0):
         return (a)
