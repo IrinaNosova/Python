@@ -1,71 +1,102 @@
-def main_menu():
-    print('1. Посмотреть контакты')
-    print('2. Создать контакт')
-    print('3. Найти контакт')
-    print('4. Изменить контакт')
-    print('5. Удалить контакт')
-    print('6. Выход')
-
-def show_directory():
-    file = open('phonebook.txt', 'r', encoding='UTF-8')
+print('Выберите пункт меню: ')
+print('1 - Открыть файл')
+print('2 - Сохранить файл')
+print('3 - Посмотреть все контакты')
+print('4 - Создать контакт')
+print('5 - Найти контакт')
+print('6 - Редактировать контакт')
+print('7 - Удалить контакт')
+print('8 - Выход')
+def open_contacts():
+    file = open('phonebook.txt', 'r', encoding='utf-8')
     data = file.readlines()
-    file.close()
     for i in data:
         print(i)
+    file.close()
 
-def add_contact():
-    file = open('phonebook.txt', 'a', encoding='UTF-8')
-    data = input('Введите фамилию, телефон, комментарий, через ; ')
-    file.write(f'\n{data}')
+def create_contact():
+    file = open('phonebook.txt', 'a', encoding='utf-8')
+    add_contact = input('Введите данные контакта: ')
+    file.writelines('\n')
+    file.writelines(add_contact)
     file.close()
 
 def find_contact():
-    find_element = input('Кого ищем? ')
-    file = open('phonebook.txt', 'r', encoding='UTF-8')
+    file = open('phonebook.txt', 'r', encoding='utf-8')
+    query = input('Введите данные контакта для поиска: ')
     data = file.readlines()
-    for item in data:
-        if find_element in item:
-            print(item)
-            break
+    for i in data:
+        if query in i:
+            print(i)
+    else: print('Такого контакта нет')
     file.close()
-
 
 def edit_contact():
-    file = open('phonebook.txt', 'r', encoding='UTF-8')
-    find_element = input('Какой контакт изменить? ')
+    file = open('phonebook.txt', 'r', encoding='utf-8')
     data = file.readlines()
-    for item in data:
-        if find_element in item:
-            print(item)
     file.close()
-    file = open('phonebook.txt', 'w', encoding='UTF-8')
-    new_item = input('Для изменения контакта введите фамилию, телефон, комментарий, через ; ')
-    item = item.replace(item, new_item)
-    file.write(f'\n{item}')
-    file.close()
-
-def delete_contact():
-    file = open('phonebook.txt', 'r', encoding='UTF-8')
-    find_element = input('Какой контакт удалить? ')
-    data = file.readlines()
-    file = open('phonebook.txt', 'w', encoding='UTF-8')
-    for item in data:
-        if find_element in item:
-            print(item)
-    file.close()
-
-main_menu()
-while True:
-    choose = int(input('Введите пункт меню: '))
-    if choose == 1:
-        show_directory()
-    if choose == 2:
-        add_contact()
-    if choose == 3:
-        find_contact()
-    if choose == 4:
+    query = input('Введите данные контакта для редактирования: ')
+    count = 0
+    for i in data:
+        if query in i:
+            print(i)
+            count +=1
+            result_contact = i
+    if count == 0:
+        print('Такого контакта нет')
+    if count == 1:
+        data.remove(result_contact)
+        data.append(input('\nВведите новый контакт:'))
+        file = open('phonebook.txt', 'w', encoding='utf-8')
+        for i in data:
+            file.writelines(i)
+        file.close()
+    elif count != 1 and count != 0:
+        print('Выберите контакт из списка совпадений и еще раз введите его полные данные')
         edit_contact()
-    if choose == 5:
-        delete_contact()
-    if choose == 6:
-        main_menu()
+
+def remove_contact():
+    file = open('phonebook.txt', 'r', encoding='utf-8')
+    data = file.readlines()
+    file.close()
+    query = input('Введите данные контакта для удаления: ')
+    count = 0
+    for i in data:
+        if query in i:
+            print(i)
+            count +=1
+            result_contact = i
+    if count == 0:
+        print('Такого контакта нет')
+    if count == 1:
+        data.remove(result_contact)
+        file = open('phonebook.txt', 'w', encoding='utf-8')
+        for i in data:
+            file.writelines(i)
+        file.close()
+    elif count != 1 and count != 0:
+        print('Выберите контакт из списка совпадений и еще раз введите его полные данные')
+        remove_contact()
+
+
+
+action = int(input('Введите номер команды: '))
+if action == 1:
+    file = open('phonebook.txt', 'r', encoding='utf-8')
+    data = file.readlines()
+    print(data)
+    file.close()
+elif action == 3:
+    open_contacts()
+elif action == 4:
+    create_contact()
+elif action == 5:
+    find_contact()
+elif action == 6:
+    edit_contact()
+elif action == 7:
+    remove_contact()
+elif action == 8:
+    file = open('phonebook.txt', 'r', encoding='utf-8')
+    file.close()
+
